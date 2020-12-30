@@ -1,0 +1,48 @@
+$color-purple-1:#8552a1;
+$color-purple-2:#6f599c;
+$color-purple-3:#694d9f;
+$color-purple-4:#6f60aa;
+$color-blue-1:#426ab3;
+$color-blue-2:#2a5caa;
+$color-blue-3:#224b8f;
+$color-red-1:#f05b72;
+$color-red-2:#f15b6c;
+$color-pink-1:#ef5b9c;
+$color-pink-2:#f391a9;
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/materialicons/v43/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+@mixin zy-button-large {
+    width: 150px;
+    height: 50px;
+    border-radius: 30px;
+    border: 0;
+    font-size: 16px;
+    letter-spacing: 2px;
+    background: none;
+    color: white;
+    padding: 0;
+    font-weight: 600;
+    background-color: #448aff;
+    box-shadow: 0 2px 6px gray;
+}
