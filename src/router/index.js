@@ -12,7 +12,7 @@ export default new Router({
                 index: 1
             },
             component: () =>
-                import ( /*webpackChunkName: "start" */ "../pages/start/index")
+                import ("../pages/start/index")
         }, {
             path: '/add',
             name: 'AddMission',
@@ -20,7 +20,7 @@ export default new Router({
                 index: 3
             },
             component: () =>
-                import ( /*webpackChunkName: "add" */ "../pages/add/index")
+                import ("../pages/add/index")
         }, {
             path: '/focus',
             name: 'Focus',
@@ -28,7 +28,7 @@ export default new Router({
                 index: 2
             },
             component: () =>
-                import ( /*webpackChunkName: "focus" */ "../pages/focus/index")
+                import ("../pages/focus/index")
         }, {
             path: '/focusMain',
             name: 'FocusMain',
@@ -36,7 +36,7 @@ export default new Router({
                 index: 2
             },
             component: () =>
-                import ( /*webpackChunkName: "focus" */ "../pages/focus/main.vue")
+                import ("../pages/focus/main.vue")
         },
         {
             path: '/index',
@@ -53,15 +53,31 @@ export default new Router({
                     index: 1
                 },
                 component: () =>
-                    import ( /*webpackChunkName: "index" */ "../pages/index/children/index")
+                    import ("../pages/index/children/index")
             }, {
-                path: 'mine',
-                name: 'MinePage',
+                path: '/memo',
+                name: 'MemoPage',
                 meta: {
                     index: 2
                 },
                 component: () =>
-                    import ( /*webpackChunkName: "index" */ "../pages/index/children/mine")
+                    import ("../pages/index/children/memo")
+            }, {
+                path: '/account',
+                name: 'AccountPage',
+                meta: {
+                    index: 3
+                },
+                component: () =>
+                    import ("../pages/index/children/account")
+            }, {
+                path: '/mine',
+                name: 'MinePage',
+                meta: {
+                    index: 4
+                },
+                component: () =>
+                    import ("../pages/index/children/mine")
             }]
         }
     ]

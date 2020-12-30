@@ -3,9 +3,9 @@
        <div class="container">
             <md-bottom-bar md-type="fixed" :md-theme="'bottom-bar-' + theme">
                 <md-bottom-bar-item md-label="任务" md-icon="add_comment" @click="setTheme('blue','MainPage')"  ></md-bottom-bar-item>
+                <md-bottom-bar-item md-label="备忘录" md-icon="cloud" @click="setTheme('blue','MemoPage')" ></md-bottom-bar-item>
+                <md-bottom-bar-item md-label="记账本" md-icon="cloud" @click="setTheme('blue','AccountPage')" ></md-bottom-bar-item>
                 <md-bottom-bar-item md-label="我的" md-icon="cloud" @click="setTheme('red','MinePage')" ></md-bottom-bar-item>
-                <md-bottom-bar-item md-label="暂无" md-icon="cloud" @click="setTheme('yellow','')" ></md-bottom-bar-item>
-                <md-bottom-bar-item md-label="暂无" md-icon="cloud" @click="setTheme('pink','')" ></md-bottom-bar-item>
             </md-bottom-bar>
         </div>
    </div>
@@ -17,7 +17,8 @@
        props:{},
        data(){
            return{
-                theme: 'blue'
+                theme: 'blue',
+                pathCur: 'MainPage'
             }
        },
        computed: {
@@ -28,8 +29,12 @@
        },
        methods: {
             setTheme(theme,path) {
-                this.theme = theme;
-                this.$router.push({name:path});
+                if(path!=this.pathCur){
+                  this.pathCur = path;
+                  console.log(theme,path);
+                  this.theme = theme;
+                  this.$router.push({name:path});
+                }
             }
        },
        created() {

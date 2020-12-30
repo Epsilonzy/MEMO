@@ -1,12 +1,12 @@
 <template>
    <div class="container">
-       <topbar title="自律坚持器"></topbar>
+       <topbar title="不知道起什么名"></topbar>
        <div class="body">
            <transition :name="routerTransition">
                 <router-view></router-view>
            </transition>
        </div>
-       <!-- <tabbar></tabbar> -->
+       <tabbar></tabbar>
    </div>
 </template>
 
