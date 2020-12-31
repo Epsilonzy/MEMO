@@ -22,6 +22,22 @@ export default new Router({
             component: () =>
                 import ("../pages/add/index")
         }, {
+            path: '/add',
+            name: 'AddMission',
+            meta: {
+                index: 3
+            },
+            component: () =>
+                import ("../pages/add/index")
+        }, {
+            path: '/addMemo',
+            name: 'AddMemo',
+            meta: {
+                index: 3
+            },
+            component: () =>
+                import ("../pages/addMemo/index")
+        }, {
             path: '/focus',
             name: 'Focus',
             meta: {

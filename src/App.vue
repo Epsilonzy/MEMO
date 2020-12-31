@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition :name="routerTransition">
-      <router-view/>
+      <router-view class="child-view"/>
     </transition>
     <md-dialog-confirm
       :md-active.sync="$store.state.confirm.active"
@@ -34,6 +34,7 @@ export default {
   watch: {//使用watch 监听$router的变化
     $route(to, from) {
       //如果to索引大于from索引,判断为前进状态,反之则为后退状态
+      window.scroll(0,0);
       if(to.meta.index > from.meta.index){
         //设置动画名称
         this.routerTransition = 'slide-left';
@@ -52,6 +53,17 @@ export default {
   margin:0;
   padding:0;
 }
+body{
+  overflow:auto;
+}
+.child-view {  
+  position: absolute;  
+  left: 0;  
+  top: 0;  
+  width: 100%;  
+  /* height: 100%;   */
+  transition: all .3s cubic-bezier(.55,0,.1,1);  
+}  
     .slide-equal-enter-active,
     .slide-equal-leave-active{
       will-change: transform;
@@ -61,7 +73,7 @@ export default {
       left:0;
       bottom:0;
       right:0;
-      height:100%;
+      /* height:100%; */
       width:100%;
     }
     .slide-equal-enter,
@@ -69,7 +81,17 @@ export default {
       opacity: 0;
       transform: scale(0.9);
     }
-    .slide-right-enter-active,
+    .slide-left-enter, .slide-right-leave-active {  
+      opacity: 0;  
+      -webkit-transform: translate(30px, 0);  
+      transform: translate(30px, 0);  
+    }  
+    .slide-left-leave-active, .slide-right-enter {  
+      opacity: 0;  
+      -webkit-transform: translate(-30px, 0);  
+      transform: translate(-30px, 0);  
+    }  
+    /* .slide-right-enter-active,
     .slide-right-leave-active,
     .slide-left-enter-active,
     .slide-left-leave-active {
@@ -83,6 +105,7 @@ export default {
         height:100%;
         width:100%;
     }
+    
     .slide-right-enter {
       opacity: 0;
       transform: translate3d(-100%, 0, 0);
@@ -98,5 +121,5 @@ export default {
     .slide-left-leave-active {
       opacity: 0;
       transform: translate3d(-100%, 0, 0);
-    }
+    } */
 </style>

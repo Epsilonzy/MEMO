@@ -18,30 +18,22 @@ const getTest = (apiUrl) => {
     })
 }
 
-const getInit = () => {
+const getInit = (key) => {
     //localstorage版本
     return new Promise(resolve => {
-        let res = JSON.parse(localStorage.getItem('memo'));
+        let res = JSON.parse(localStorage.getItem(key));
         if (res) {
             resolve(res);
         } else {
-            resolve({
-                missions: [],
-                finishMissions: [],
-                focusCnt: 0
-            })
+            resolve(false);
         }
     })
 }
 
-const saveLocal = (data) => {
+const saveLocal = (key, data) => {
     return new Promise(resolve => {
-        let send = JSON.stringify({
-            missions: data.missions,
-            finishMissions: data.finishMissions,
-            focusCnt: data.focusCnt
-        });
-        localStorage.setItem('memo', send);
+        let send = JSON.stringify(data);
+        localStorage.setItem(key, send);
         resolve(true);
     })
 }

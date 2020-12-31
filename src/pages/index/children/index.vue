@@ -14,12 +14,12 @@
                <p>剩余的任务数</p>
             </div>
          </div>
-         <header v-show="anm3" class="animate__animated" >
+         <!-- <header v-show="anm3" class="animate__animated" >
             <p>专注时间总长</p>
             <p class="timeCnt">{{focusCnt}}<span>min</span></p>
             <md-button to="/focus" class="md-accent">开始专注</md-button>
-         </header>
-         <div class="addBtn ">
+         </header> -->
+         <div class="addBtn animate__animated animate__bounceIn">
             <md-button class="md-fab md-primary" to="/add">
                <md-icon>add</md-icon>
             </md-button>
@@ -47,8 +47,7 @@
                anm1:false,
                anm2:false,
                anm3:false,
-               anm4:false,
-               missionsShowQ:[]
+               anm4:false
             }
        },
        computed: {

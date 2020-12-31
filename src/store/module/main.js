@@ -19,36 +19,34 @@ const getters = {
 
 const actions = {
     initLocal({ commit }) {
-        api.getInit().then(data => {
-            commit('INIT', data);
+        //取存mission任务的键值
+        api.getInit("missions").then(data => {
+            if (data) {
+                commit('INIT', data);
+            }
         })
     }
 }
 
 const mutations = {
-    TEST(state, data) {
-        state.test = data;
-    },
     INIT(state, data) {
-        state.missions = data.missions;
-        state.finishMissions = data.finishMissions;
-        state.focusCnt = data.focusCnt;
+        state = data;
     },
     ADD(state, data) {
         state.missions.unshift(data);
-        api.saveLocal(state);
+        api.saveLocal("missions", state);
     },
     FINISH(state, index) {
         state.finishMissions.push(state.missions.splice(index, 1));
-        api.saveLocal(state);
+        api.saveLocal("missions", state);
     },
     DELETE(state, index) {
         state.missions.splice(index, 1);
-        api.saveLocal(state);
+        api.saveLocal("missions", state);
     },
     ADDFOCUS(state, time) {
         state.focusCnt += parseInt(time);
-        api.saveLocal(state);
+        api.saveLocal("missions", state);
     }
 }
 

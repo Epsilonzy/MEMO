@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import main from './module/main.js'
+import memo from './module/memo.js'
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -29,7 +30,8 @@ export default new Vuex.Store({
             content: '内容',
             active: false,
             confirmText: '确认'
-        }
+        },
+        tabbarSelected: "MainPage"
     },
     mutations: {
         //控制弹窗
@@ -43,6 +45,9 @@ export default new Vuex.Store({
             if (data.fail) {
                 state.confirm.fail = data.fail;
             }
+        },
+        CHANGE_TABBAR(state, data) {
+            state.tabbarSelected = data;
         },
         ALERTF(state, data) {
             state.alertF.content = data.content;
@@ -61,6 +66,7 @@ export default new Vuex.Store({
         }
     },
     modules: {
-        main
+        main,
+        memo
     },
 })

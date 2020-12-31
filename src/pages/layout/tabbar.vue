@@ -1,11 +1,11 @@
 <template>
    <div> 
        <div class="container">
-            <md-bottom-bar md-type="fixed" :md-theme="'bottom-bar-' + theme">
-                <md-bottom-bar-item md-label="任务" md-icon="add_comment" @click="setTheme('blue','MainPage')"  ></md-bottom-bar-item>
-                <md-bottom-bar-item md-label="备忘录" md-icon="cloud" @click="setTheme('blue','MemoPage')" ></md-bottom-bar-item>
-                <md-bottom-bar-item md-label="记账本" md-icon="cloud" @click="setTheme('blue','AccountPage')" ></md-bottom-bar-item>
-                <md-bottom-bar-item md-label="我的" md-icon="cloud" @click="setTheme('red','MinePage')" ></md-bottom-bar-item>
+            <md-bottom-bar md-type="fixed" :md-theme="'bottom-bar-' + theme" :md-active-item="$store.state.tabbarSelected">
+                <md-bottom-bar-item id="MainPage" md-label="任务" md-icon="add_comment" @click="setTheme('blue','MainPage')"  ></md-bottom-bar-item>
+                <md-bottom-bar-item id="MemoPage" md-label="备忘录" md-icon="folder" @click="setTheme('blue','MemoPage')" ></md-bottom-bar-item>
+                <md-bottom-bar-item id="AccountPage" md-label="记账本" md-icon="dock" @click="setTheme('blue','AccountPage')" ></md-bottom-bar-item>
+                <md-bottom-bar-item id="MinePage" md-label="我的" md-icon="dashboard" @click="setTheme('red','MinePage')" ></md-bottom-bar-item>
             </md-bottom-bar>
         </div>
    </div>
@@ -22,7 +22,7 @@
             }
        },
        computed: {
-           
+
        },
        watch: {
            
@@ -31,8 +31,9 @@
             setTheme(theme,path) {
                 if(path!=this.pathCur){
                   this.pathCur = path;
-                  console.log(theme,path);
+                  console.log(theme,path,this.$store.state.tabbarSelected);
                   this.theme = theme;
+                  this.$store.commit("CHANGE_TABBAR",path);
                   this.$router.push({name:path});
                 }
             }
@@ -41,7 +42,11 @@
            
        },
        mounted() {
-           
+          const pathName = this.$route.name;
+          if(this.pathCur!=pathName){
+            this.pathCur = pathName;
+            this.$store.state.tabbarSelected = pathName;
+          }
        },
 };
 </script>

@@ -45,11 +45,15 @@
        },
        mounted() {
            this.$store.dispatch("main/initLocal");
+           this.$store.dispatch("memo/initLocal");
        }
     };
 </script>
 
 <style lang='scss' scoped>
+        body{
+            overflow:hidden;
+        }
        .container{
            min-height:100vh;
        }
