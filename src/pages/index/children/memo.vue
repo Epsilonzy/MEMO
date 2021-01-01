@@ -39,10 +39,11 @@
            
        },
        mounted() {
-           this.$nextTick(()=>{
-            console.log(document.documentElement.scrollTop);
-            document.documentElement.scrollTop = 0;
-         });
+           //用来解决切屏动画播放完毕后，scrollTop不为零导致fixed元素排版乱序的问题
+           //如果想要保持高度（这个设计很人性化），可以用vuex再存储一波 :) 先睡了，明早再敲(flag)
+           setTimeout(()=>{
+              document.documentElement.scrollTop = 0;
+           },10);
        },
        created(){
        }
