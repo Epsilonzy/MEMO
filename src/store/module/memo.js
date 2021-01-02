@@ -36,7 +36,6 @@ const mutations = {
     },
     ADD(state, data) {
         data = methods.packMemo(data);
-        console.log(data);
         state.memos.unshift(data);
         //第一个是local的key名字，第二个是要存储的state状态
         api.saveLocal("memos", state);
@@ -46,8 +45,15 @@ const mutations = {
         api.saveLocal("memos", state);
     },
     UPDATE(state, data) {
-
-        state.memos[index]
+        let oldData = state.memos[data.index];
+        let memoNew = data.data;
+        if (oldData) {
+            oldData.contentRaw = memoNew.contentRaw;
+            oldData.content = memoNew.contentRaw.split('\n');
+            oldData.title = memoNew.title;
+            oldData.updateTime.push(new Date());
+        }
+        api.saveLocal("memos", state);
     }
 }
 

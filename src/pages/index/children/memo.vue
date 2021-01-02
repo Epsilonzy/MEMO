@@ -7,9 +7,10 @@
       </div>
       <div class="memo" v-for="(item,index) in memos" :key="index">
          <p class="date">{{item.timeYMD}}</p>
-         <div class="detailsBox">
+         <div class="detailsBox" @click="toUrl({index:index,id:item.id})">
             <p class="title"><span class="time">{{item.timeHMS}}</span>{{item.title}}</p>
-            <p class="review">{{item.content[0]}}</p>
+            <p class="review">{{item.content[0]+"..."}}</p>
+            <p class="review">{{item.content[1]?item.content[1]+"...":""}}</p>
          </div>
       </div>
    </div>
@@ -33,7 +34,15 @@
            
        },
        methods: {
-           
+           toUrl(data){
+              this.$router.push({
+                 name:"MemoDetails",
+                 params:{
+                    index:data.index,
+                    id:data.id
+                 }
+              })
+           }
        },
        created() {
            

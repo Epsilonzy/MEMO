@@ -4,6 +4,12 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
+const indexSetting = {
+    "MainPage": 1,
+    "MemoPage": 2,
+    "AccountPage": 3
+}
+
 export default new Router({
     routes: [{
             path: '/',
@@ -13,19 +19,11 @@ export default new Router({
             },
             component: () =>
                 import ("../pages/start/index")
-        }, {
+        }, , {
             path: '/add',
             name: 'AddMission',
             meta: {
-                index: 3
-            },
-            component: () =>
-                import ("../pages/add/index")
-        }, {
-            path: '/add',
-            name: 'AddMission',
-            meta: {
-                index: 3
+                index: indexSetting["MainPage"] + 1 //右滑
             },
             component: () =>
                 import ("../pages/add/index")
@@ -33,7 +31,7 @@ export default new Router({
             path: '/addMemo',
             name: 'AddMemo',
             meta: {
-                index: 3
+                index: indexSetting["MemoPage"] + 1
             },
             component: () =>
                 import ("../pages/addMemo/index")
@@ -53,6 +51,14 @@ export default new Router({
             },
             component: () =>
                 import ("../pages/focus/main.vue")
+        }, {
+            path: '/memoDetails',
+            name: 'MemoDetails',
+            meta: {
+                index: indexSetting["MemoPage"] + 1 //memoPage +1
+            },
+            component: () =>
+                import ("../pages/details/memo.vue")
         },
         {
             path: '/index',

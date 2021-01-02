@@ -1,6 +1,6 @@
 <template>
    <div class="container">
-      <topBar title="编辑备忘录" iconLeft="keyboard_arrow_left" @leftClick="back()"></topBar>
+      <topBar title="发布备忘录" iconLeft="keyboard_arrow_left" @leftClick="back()"></topBar>
       <div class="body">
           <p class="date">{{date}}</p>
           <md-field class="animate__animated">
@@ -34,6 +34,7 @@
                   contentRaw:"",
                   time:'',
                   timeHMS:'',
+                  timeYMD:'',
                   updateTime:[]
                },
                date:void 0

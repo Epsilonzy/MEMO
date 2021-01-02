@@ -17,10 +17,9 @@ const packMemo = (data) => {
     data.timeHMS = `${d.getHours()}:${d.getMinutes()}:${d.getMinutes()}`;
     data.time = `${data.timeYMD} ${data.timeHMS}`;
     data.content = data.contentRaw.split('\n');
-    data.updateTime.push(data.time);
+    data.updateTime.push(d);
     return data;
 }
-
 export default {
     packMemo
 }

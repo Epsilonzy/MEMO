@@ -6,7 +6,7 @@
            </div>
            <p class="title">{{title}}</p>
            <div class="rightBox" @click="rightClickS()">
-                <md-icon id="iconR">{{iconRight}}</md-icon>
+                <md-icon style="color:white">{{iconRight}}</md-icon>
            </div>
        </div>
    </div>
@@ -52,6 +52,9 @@
        methods: {
            leftClickS(){
                this.$emit('leftClick');
+           },
+           rightClickS(){
+               this.$emit('rightClick');
            }
        },
        created() {
@@ -91,6 +94,7 @@
             margin-left:20px;
             height:50px;
             text-align: center;
+            transition:all .3s linear;
         }
         .rightBox{
             float: right;
@@ -98,15 +102,18 @@
             margin-right:20px;
             height:50px;
             text-align: center;
+            color:white !important;
+            transition:all .3s linear;
         }
         #iconL{
-            color:white;
+            color:white !important;
             font-size:40px !important;
             text-align: center;
         #iconR{
-            color:white;
+            color:white !important;
             font-size:40px !important;
             text-align: center;
+            transition:.3s linear;
         }
       }
     }
