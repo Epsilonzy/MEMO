@@ -22,9 +22,14 @@
           </div>
           <div v-show="!isEdit">
               <p class="title">{{memo.title}}</p>
-                <p class="content" v-for="(item,index) in memo.content" :key="index">
+              <p class="content" v-for="(item,index) in memo.content" :key="index">
                     {{item}}
-                </p>
+              </p>
+              <div class="addBtn animate__animated animate__bounceIn">
+                    <md-button class="md-fab md-primary" @click="deleteMemo">
+                        <md-icon>clear</md-icon>
+                    </md-button>
+              </div>
           </div>
       </div>
    </div>
@@ -57,6 +62,21 @@
            
        },
        methods: {
+          deleteMemo(){
+              this.$store.commit('CONFIRM',{
+                  title:'提示',
+                  content:'确定删除吗?',
+                  success:()=>{
+                      this.$store.commit('memo/DELETE',{
+                        index:this.index,
+                        id:this.id
+                      });
+                      window.history.back(-1);
+                  },
+                  //需要覆盖!
+                  fail:()=>{}
+              })
+          },
           submit(){
                 this.$store.commit('memo/UPDATE',{
                     data:this.memo,
@@ -86,6 +106,8 @@
                         this.isEdit = !this.isEdit;
                     }
                 })
+             } else {
+                 window.history.back(-1);
              }
           },
           edit(){
@@ -141,6 +163,18 @@
    .body{
       margin:0 20px;
    }
+   .noMission{
+         padding:20px;
+         color:gray;
+         text-align: center;
+         font-size:18px;
+    }
+    .addBtn{
+         position:fixed;
+         bottom:80px;
+         right:10px;
+         z-index:99;
+      }
    .date{
       text-align: center;
       font-size:18px;

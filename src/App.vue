@@ -61,7 +61,7 @@ body{
   left: 0;  
   top: 0;  
   width: 100%;  
-  /* height: 100%;   */
+  height: 100%;  
   transition: all .3s cubic-bezier(.55,0,.1,1);  
 }  
     .slide-equal-enter-active,
@@ -73,7 +73,7 @@ body{
       left:0;
       bottom:0;
       right:0;
-      /* height:100%; */
+      height:100%;
       width:100%;
     }
     .slide-equal-enter,

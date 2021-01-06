@@ -40,11 +40,25 @@ const mutations = {
         //第一个是local的key名字，第二个是要存储的state状态
         api.saveLocal("memos", state);
     },
-    DELETE(state, index) {
-        state.memos.splice(index, 1);
+    DELETE(state, data) {
+
+        // data's structure:
+        // {
+        //     index:Number,
+        //     id:String
+        // }
+        state.memos.splice(data.index, 1);
         api.saveLocal("memos", state);
     },
     UPDATE(state, data) {
+
+        // data's structure:
+        // {
+        //     data:memo,
+        //     index:Number,
+        //     id:String
+        // }
+
         let oldData = state.memos[data.index];
         let memoNew = data.data;
         if (oldData) {

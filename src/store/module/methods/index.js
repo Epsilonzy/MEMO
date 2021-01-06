@@ -20,6 +20,39 @@ const packMemo = (data) => {
     data.updateTime.push(d);
     return data;
 }
+
+const getTimeDetailNow = () => {
+    function calDayInMonth(month, isLeap = false) {
+        if (month == 2) {
+            //是否闰年
+            let d = isLeap ? 29 : 28;
+            return d;
+        }
+        if (month < 8 && month % 2 == 1) {
+            return 31;
+        } else if (month >= 8 && month % 2 == 0) {
+            return 31;
+        } else {
+            return 30;
+        }
+    }
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1; //0为1月
+    let day = date.getDate();
+    let dayInYear = 0;
+    for (let i = 1; i < month; i++) {
+        dayInYear += calDayInMonth(month);
+    }
+    dayInYear += day;
+    return {
+        year,
+        month,
+        day,
+        dayInYear
+    }
+}
 export default {
-    packMemo
+    packMemo,
+    getTimeDetailNow
 }

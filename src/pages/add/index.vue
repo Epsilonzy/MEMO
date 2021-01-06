@@ -1,20 +1,37 @@
 <template>
    <div class="container">
-      <topBar title="添加任务" iconLeft="keyboard_arrow_left" @leftClick="back()"></topBar>
+      <topBar title="制定计划" iconLeft="keyboard_arrow_left" @leftClick="back()"></topBar>
       <div class="body">
           <md-card-header class="animate__animated animate__bounce">
             <div class="md-title">{{title}}</div>
           </md-card-header>
-          <md-field class="animate__animated animate__fadeInLeft">
-            <label>任务标题</label>
-            <md-input v-model="mission.title"></md-input>
+          <md-field class="animate__animated animate__fadeInLeft" :class="{'md-invalid':titleWrong}">
+            <label>计划标题</label>
+            <md-input v-model="plan.title"></md-input>
+            <span class="md-error">标题不能为空!</span>
             <span class="md-helper-text">不如起一个醒目的标题(ง •_•)ง</span>
           </md-field>
           <md-field class="animate__animated animate__fadeInRight">
-            <label>任务内容</label>
-            <md-textarea v-model="mission.content" md-autogrow></md-textarea>
-            <span class="md-helper-text">可以按回车哦,设定的目标一定要做哦o(￣ヘ￣o＃)</span>
+            <label>设定的计划内容(非必填)</label>
+            <md-textarea v-model="plan.content" md-autogrow></md-textarea>
+            <span class="md-helper-text">设定的内容一定要做哦o(￣ヘ￣o＃)</span>
           </md-field>
+          <md-field class="animate__animated animate__fadeInLeft">
+            <md-select v-model="plan.weight" id="weight">
+               <md-option value="-1">未设定</md-option>
+               <md-option value="4">最高优先级</md-option>
+               <md-option value="3">高优先级</md-option>
+               <md-option value="2">中优先级</md-option>
+               <md-option value="1">低优先级</md-option>
+               <md-option value="0">最低优先级</md-option>
+            </md-select>
+            <span class="md-helper-text">选择计划优先级</span>
+          </md-field>
+          <md-field :class="{'md-invalid':intervalWrong}">
+            <label>设定间隔时间(单位为天数) 0为每天</label>
+            <md-input v-model="plan.interval"></md-input>
+            <span class="md-error">必须为数字，值的范围0~355 0为每天</span>
+         </md-field>
           <div class="center">
              <md-button class="md-fab md-primary button animate__bounceIn" @click="submit()">
                <md-icon>edit</md-icon>
@@ -32,36 +49,65 @@
        data(){
            return{
                title:'',
-               titleList:['来加任务啦?♪(^∇^*)','添加新任务','川流不息,生命无止'],
-               mission:{
+               titleList:['♪(^∇^*)','','(⑉･̆-･̆⑉)','(◔‸◔)','ଘ(੭ˊᵕˋ)੭','꒰ᐢ⸝⸝•༝•⸝⸝ᐢ꒱','੯‧̀͡u (҂`･ｪ･´) <,︻╦̵̵̿╤─ ҉ - --'],
+               plan:{
                   title:'',
-                  content:''
-               }
+                  content:'',
+                  weight:'-1', //类型转换
+                  interval:'', //类型转换,
+                  startDayInYear:0
+               },
+               titleWrong:false,
+               intervalWrong:false
             }
        },
        computed: {
            
        },
        watch: {
-           
+            'plan.interval': {
+               handler(newV, oldV) {
+                  let num = parseInt(newV);
+                  if(num!=NaN&&num>=0&&num<=355){
+                     this.intervalWrong = false;
+                  } else {
+                     this.intervalWrong = true;
+                  }
+               },
+               immediate: true,
+            },
+            'plan.title':{
+               handler(newV,oldV){
+                  if(newV==""){
+                     this.titleWrong = true;
+                  } else {
+                     this.titleWrong = false;
+                  }
+               },
+               immediate:true
+            }
        },
        methods: {
           back(){
              window.history.back();
           },
           submit(){
-             if(this.mission.title!=""&&this.mission.content!=""){
+             if(!this.titleWrong&&!this.intervalWrong&&this.plan.weight!='-1'){
                 this.$store.commit('CONFIRM',{
                    title:'提示',
-                   content:'确认添加新任务吗?',
+                   content:'确认添加新计划吗?',
                    success:()=>{
-                      this.$store.commit('main/ADD',this.mission);
+                      this.plan.weight = parseInt(this.plan.weight);
+                      this.plan.interval = parseInt(this.plan.interval);
+                      console.log(this.plan);
+                      this.$store.commit('main/ADD_PLAN',this.plan);
                       window.history.back(-1);
-                   }
+                   },
+                   fail:()=>{}
                 })
              } else {
                 this.$store.commit('ALERTF',{
-                   content:'任务标题或内容不能为空',
+                   content:'标题或时间间隔或权重不能为空',
                    confirmText:'我知道啦!'
                 })
              }
@@ -71,7 +117,7 @@
            
        },
        mounted() {
-           let random = parseInt(Math.random()*10)%3;
+           let random = parseInt(Math.random()*10)%this.titleList.length;
            this.title = this.titleList[random];
        },
 };

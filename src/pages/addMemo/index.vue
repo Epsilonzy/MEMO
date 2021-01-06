@@ -12,7 +12,7 @@
             <md-textarea v-model="memo.contentRaw" placeholder="在这里输入备忘录内容" md-autogrow></md-textarea>
          </md-field>
           <div class="center">
-             <md-button class="md-fab md-primary button animate__bounceIn" @click="submit()">
+             <md-button class="md-fab md-primary button" @click="submit()">
                <md-icon>edit</md-icon>
              </md-button>
           </div>

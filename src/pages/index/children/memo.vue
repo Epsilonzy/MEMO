@@ -5,6 +5,9 @@
             <md-icon>add</md-icon>
          </md-button>
       </div>
+      <div class="noMission" v-if="memos.length==0">
+         <p>还没有写备忘录，点击右侧+号按钮进行添加</p>
+      </div>
       <div class="memo" v-for="(item,index) in memos" :key="index">
          <p class="date">{{item.timeYMD}}</p>
          <div class="detailsBox" @click="toUrl({index:index,id:item.id})">
@@ -65,6 +68,12 @@
       bottom:80px;
       right:10px;
       z-index:99;
+   }
+   .noMission{
+      padding:20px;
+      color:gray;
+      text-align: center;
+      font-size:18px;
    }
    .memo{
       width:100%;
