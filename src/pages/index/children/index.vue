@@ -14,11 +14,9 @@
                <p>今天剩余的任务数</p>
             </div>
          </div>
-         <!-- <header v-show="anm3" class="animate__animated" >
-            <p>专注时间总长</p>
-            <p class="timeCnt">{{focusCnt}}<span>min</span></p>
-            <md-button to="/focus" class="md-accent">开始专注</md-button>
-         </header> -->
+         <header v-show="anm3" class="animate__animated" >
+            <md-button to="/planDetails" class="md-accent">查看计划</md-button>
+         </header>
          <div class="addBtn animate__animated animate__bounceIn">
             <md-button class="md-fab md-primary" to="/add">
                <md-icon>add</md-icon>
@@ -90,7 +88,8 @@
        
            this.anm4 = true;
 
-           console.log()
+           console.log(this.$store.state.main.plan)
+
        },
 };
 </script>

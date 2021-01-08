@@ -11,7 +11,7 @@ const state = {
             month: 0, //月
             day: 0, //日
             dayInYear: 0 //一年中的第X天
-        }, //上次更新时间
+        }, //上次更新计划时间
         queue: [],
         // {
         //     title: '', //计划标题
@@ -19,6 +19,8 @@ const state = {
         //     weight: 0, //计划权重 权重值越高越优先
         //     interval: 0, //计划间隔天数
         //     startDayInYear: 0 //单位天数 开始时间
+        //     startTime:YYYY-MM-DD //设定计划开始的时间
+        //     setTime:YYYY-MM-DD //设置此计划的时间
         // }
         hasPlan: false
     }
@@ -66,26 +68,41 @@ const mutations = {
                 //添加任务
                 console.log('添加任务');
                 state.plan.queue.forEach((item, index) => {
-                        //拿到差值
-                        let distance = Math.abs(nowTime.dayInYear - item.startDayInYear);
-                        //对差值进行设定的任务间隔判断
-                        if (distance % (item.interval + 1) == 0) {
-                            //取余得0判断需间隔数加1,每天就是0,所以任意值对0+1取余都为0
-                            state.missions.push({
-                                //**此处待更新**
-                                title: item.title,
-                                content: item.content
-                            })
-                        }
-                    })
-                    //更新时间
+                    //拿到差值
+                    let distance = Math.abs(nowTime.dayInYear - item.startDayInYear);
+                    //对差值进行设定的任务间隔判断
+                    if (distance % (item.interval + 1) == 0) {
+                        //取余得0判断需间隔数加1,每天就是0,所以任意值对0+1取余都为0
+                        state.missions.push({
+                            //**此处待更新**
+                            title: item.title,
+                            content: item.content,
+                            weight: item.weight,
+                            interval: item.interval
+                        })
+                    }
+                })
+
+                //更新时间
                 state.plan.lastUpdateTime = nowTime;
+                api.saveLocal("main", state);
             }
         }
     },
     ADD_PLAN(state, plan) {
         let isInsert = false;
-        plan.startDayInYear = methods.getTimeDetailNow().dayInYear;
+        const time = methods.getTimeDetailNow();
+        const startTime = methods.getTimeDetailNow(plan.startTime);
+
+        //设定时间
+        plan.startDayInYear = time.dayInYear;
+        plan.setTime = `${time.year}-${time.month}-${time.day}`
+
+        //如果是当天任务则添加到当日任务中
+        // if(startTime.dayInYear==time.dayInYear&&startTime.year==time.year){
+        //     state.missions.push({})
+        // }
+
         for (let i = 0; i < state.plan.queue.length; i++) {
             //权重值由大到小排列
             if (!(state.plan.queue[i].weight > plan.weight)) {
@@ -110,7 +127,7 @@ const mutations = {
         //     index:Number//索引位置
         //     data:plan//更新的计划
         // }
-        state.plan.queue[data.index] = data.plan;
+        state.plan.queue[data.index] = data.data;
         api.saveLocal("main", state);
     },
     ADD(state, data) {

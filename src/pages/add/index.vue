@@ -1,6 +1,10 @@
 <template>
    <div class="container">
-      <topBar title="制定计划" iconLeft="keyboard_arrow_left" @leftClick="back()"></topBar>
+      <topBar 
+      :title="isUpdate?'更改计划':'制定计划'" 
+      iconLeft="keyboard_arrow_left" 
+      @leftClick="back()"
+      ></topBar>
       <div class="body">
           <md-card-header class="animate__animated animate__bounce">
             <div class="md-title">{{title}}</div>
@@ -28,10 +32,12 @@
             <span class="md-helper-text">选择计划优先级</span>
           </md-field>
           <md-field :class="{'md-invalid':intervalWrong}">
-            <label>设定间隔时间(单位为天数) 0为每天</label>
             <md-input v-model="plan.interval"></md-input>
+            <span class="md-helper-text">设定间隔时间(单位为天数) 0为每天</span>
             <span class="md-error">必须为数字，值的范围0~355 0为每天</span>
          </md-field>
+         <span class="md-helper-text">设定计划开始执行的时间</span>
+         <md-datepicker v-model="plan.startTime" md-immediately :md-disabled-dates="disabledDates"/>
           <div class="center">
              <md-button class="md-fab md-primary button animate__bounceIn" @click="submit()">
                <md-icon>edit</md-icon>
@@ -55,10 +61,17 @@
                   content:'',
                   weight:'-1', //类型转换
                   interval:'', //类型转换,
-                  startDayInYear:0
+                  startTime:new Date(),
+                  setTime:''
                },
+               planIndex:-1,
                titleWrong:false,
-               intervalWrong:false
+               intervalWrong:false,
+               isUpdate:false,
+               disabledDates:date=>{
+                  return date.getTime()<this.nowDate.getTime();
+               },
+               nowDate:new Date()
             }
        },
        computed: {
@@ -92,15 +105,24 @@
              window.history.back();
           },
           submit(){
-             if(!this.titleWrong&&!this.intervalWrong&&this.plan.weight!='-1'){
+             if(!this.titleWrong&&!this.intervalWrong&&this.plan.weight!='-1'&&this.plan.startTime){
                 this.$store.commit('CONFIRM',{
                    title:'提示',
-                   content:'确认添加新计划吗?',
+                   content:this.isUpdate?'确认更改计划吗?':'确认添加新计划吗?',
                    success:()=>{
+                      let d = this.plan.startTime;
+                      this.plan.startTime = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`
                       this.plan.weight = parseInt(this.plan.weight);
                       this.plan.interval = parseInt(this.plan.interval);
-                      console.log(this.plan);
-                      this.$store.commit('main/ADD_PLAN',this.plan);
+
+                      if(this.isUpdate){
+                         this.$store.commit('main/UPDATE_PLAN',{
+                            data:this.plan,
+                            index:this.planIndex
+                         });
+                      } else {
+                         this.$store.commit('main/ADD_PLAN',this.plan);
+                      }
                       window.history.back(-1);
                    },
                    fail:()=>{}
@@ -119,6 +141,24 @@
        mounted() {
            let random = parseInt(Math.random()*10)%this.titleList.length;
            this.title = this.titleList[random];
+
+           let transPlan = this.$route.params.plan;//路由传递过来的参数
+           this.planIndex = this.$route.params.index;
+           if(transPlan){
+              this.isUpdate = true;//修改UI为更新计划模式
+
+              this.plan.startTime = new Date(transPlan.startTime);//格式化时间
+              this.plan.title = transPlan.startTime;
+              this.plan.content = transPlan.content;
+              this.plan.weight = transPlan.weight;
+              this.plan.interval = transPlan.interval
+           }
+
+           //初始化为0点，否则日历不会记入今天的日子
+           this.nowDate.setHours(0);
+           this.nowDate.setMinutes(0);
+           this.nowDate.setSeconds(0);
+           this.nowDate.setMilliseconds(0);
        },
 };
 </script>

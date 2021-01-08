@@ -21,7 +21,7 @@ const packMemo = (data) => {
     return data;
 }
 
-const getTimeDetailNow = () => {
+const getTimeDetailNow = (dateStr = void 0) => {
     function calDayInMonth(month, isLeap = false) {
         if (month == 2) {
             //是否闰年
@@ -36,7 +36,7 @@ const getTimeDetailNow = () => {
             return 30;
         }
     }
-    let date = new Date();
+    let date = dateStr ? new Date(dateStr) : new Date();
     let year = date.getFullYear();
     let month = date.getMonth() + 1; //0为1月
     let day = date.getDate();

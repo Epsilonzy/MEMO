@@ -23,7 +23,7 @@ export default new Router({
             path: '/add',
             name: 'AddMission',
             meta: {
-                index: indexSetting["MainPage"] + 1 //右滑
+                index: indexSetting["MainPage"] + 2 //右滑
             },
             component: () =>
                 import ("../pages/add/index")
@@ -51,6 +51,14 @@ export default new Router({
             },
             component: () =>
                 import ("../pages/focus/main.vue")
+        }, {
+            path: '/planDetails',
+            name: 'PlanDetails',
+            meta: {
+                index: indexSetting["MainPage"] + 1 //memoPage +1
+            },
+            component: () =>
+                import ("../pages/details/plan.vue")
         }, {
             path: '/memoDetails',
             name: 'MemoDetails',
