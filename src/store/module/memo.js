@@ -12,6 +12,7 @@ const getters = {
 const actions = {
     initLocal({ commit }) {
         api.getInit("memos").then(data => {
+            console.log(data);
             commit('INIT', data);
         })
     }
@@ -32,7 +33,9 @@ const actions = {
 
 const mutations = {
     INIT(state, data) {
-        state.memos = data.memos;
+        if (data.memos) {
+            state.memos.push(...data.memos);
+        }
     },
     ADD(state, data) {
         data = methods.packMemo(data);

@@ -7,6 +7,10 @@ import '@/config/rem'
 // import axios from 'axios'
 import vueScroller from 'vue-scroller'
 import localstore from '@/api/store.js';
+
+//监听安卓物理按键mui
+import Mui from 'vue-awesome-mui'
+Vue.use(Mui);
 // import VueSocketIO from 'vue-socket.io';
 // Vue.use(new VueSocketIO({
 //   debug: true,

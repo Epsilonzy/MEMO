@@ -24,6 +24,23 @@
         },
         mounted(){
             // this.$store.dispatch('main/getTest');
+            let first = false;
+            mui.back = function(){
+               if(!first){
+                   first = true;
+                   mui.toast("再次点击就退出程序(杀进程)\(@^0^@)/")
+                   setTimeout(()=>{
+                       first = false;
+                   },1000);
+               } else {
+                   plus.runtime.quit();
+               }
+            }
+        },
+        destroyed(){
+            mui.back = function(){
+                window.history.back(-1);
+            }
         }
     }
 </script>

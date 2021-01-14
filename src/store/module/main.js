@@ -99,9 +99,15 @@ const mutations = {
         plan.setTime = `${time.year}-${time.month}-${time.day}`
 
         //如果是当天任务则添加到当日任务中
-        // if(startTime.dayInYear==time.dayInYear&&startTime.year==time.year){
-        //     state.missions.push({})
-        // }
+        if (plan.interval == 0 && state.plan.hasPlan) {
+            console.log("插入了")
+            state.missions.push({
+                title: plan.title,
+                content: plan.content,
+                weight: plan.weight,
+                interval: plan.interval
+            })
+        }
 
         for (let i = 0; i < state.plan.queue.length; i++) {
             //权重值由大到小排列

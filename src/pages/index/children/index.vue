@@ -24,8 +24,8 @@
          </div>
          <div v-show="anm4">
             <div class="noMission" v-if="missions.length==0">
-               <p v-if="plan.hasPlan&&finishCnt!=0" >牛逼嗷哥哥&姐姐!今天的计划任务都已经完成啦!</p>
-               <p v-if="plan.hasPlan&&surplusCnt==0" >今天..好像没有任务啊..点击右侧+按钮设定暂时任务</p>
+               <p v-if="plan.hasPlan&&finishCnt!=0&&surplusCnt==0" >牛逼嗷哥哥&姐姐!今天的计划任务都已经完成啦!</p>
+               <p v-if="plan.hasPlan&&surplusCnt==0&&finishCnt==0" >今天..好像没有任务啊..点击右侧+按钮设定暂时任务</p>
                <p v-if="!plan.hasPlan">暂时还没有制定计划，请点击右侧+按钮进行计划的制定</p>
             </div>
             <div v-for="(item,index) in missions" :key="index">
