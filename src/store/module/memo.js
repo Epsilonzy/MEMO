@@ -34,7 +34,7 @@ const actions = {
 const mutations = {
     INIT(state, data) {
         if (data.memos) {
-            state.memos.push(...data.memos);
+            state.memos = [...data.memos];
         }
     },
     ADD(state, data) {
